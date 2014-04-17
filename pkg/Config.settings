@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="pkg" GeneratedClassName="Config">
+  <Profiles />
+  <Settings>
+    <Setting Name="LocalStorage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Libraries\</Value>
+    </Setting>
+    <Setting Name="Extractor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Program Files\7-Zip\7z.exe</Value>
+    </Setting>
+    <Setting Name="Verbose" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
