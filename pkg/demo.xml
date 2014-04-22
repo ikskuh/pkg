@@ -4,5 +4,7 @@
 	<package name="SDL2-devel-2.0.3-mingw" source="http://libsdl.org/release/SDL2-devel-2.0.3-mingw.tar.gz" />
 	<package name="SDL-devel-1.2.15-vc" source="http://libsdl.org/release/SDL-devel-1.2.15-VC.zip" />
 	<package name="SDL-devel-1.2.15-mingw32" source="http://libsdl.org/release/SDL-devel-1.2.15-mingw32.tar.gz" />
+	<package name="intel-opencl-x86" source="http://registrationcenter.intel.com/irc_nas/3782/intel_sdk_for_ocl_applications_2013_r3_x86_setup.exe" />
+	<package name="intel-opencl-x64" source="http://registrationcenter.intel.com/irc_nas/3782/intel_sdk_for_ocl_applications_2013_r3_x64_setup.exe" />
 	<template name="SDL2-game-mingw" source="http://localhost/pkg/SDL2-game-mingw.zip" />
 </repository>

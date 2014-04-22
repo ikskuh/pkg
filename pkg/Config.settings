@@ -11,5 +11,11 @@
     <Setting Name="Verbose" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="InstallRoot" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\pkg\pkg\bin\Debug\</Value>
+    </Setting>
+    <Setting Name="TempPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Libraries\.temp\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

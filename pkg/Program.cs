@@ -19,9 +19,7 @@ namespace pkg
 
 		static Program()
 		{
-			pkgroot = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + "/";
-			if (pkgroot == "/")
-				pkgroot = "./";
+			pkgroot = Config.Default.InstallRoot + "/";
 			pkgname = Path.GetFileNameWithoutExtension(Environment.GetCommandLineArgs()[0]);
 
 			commands = Command.GetCommands();

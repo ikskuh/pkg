@@ -3,4 +3,4 @@
 ############################################################################
 
 #Default Repo
-file:/D:\temp\pkg\pkg\demo.xml
+file:/D:\pkg\pkg\demo.xml

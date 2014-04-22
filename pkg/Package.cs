@@ -46,21 +46,25 @@ namespace pkg
 		{
 			var uri = new Uri(this.Source);
 			string fileName = Path.GetFileName(uri.AbsolutePath);
-			var tempFile = Path.GetTempPath() + "/" + fileName;
+			var tempFile = Config.Default.TempPath + "/" + fileName;
 
 			Directory.CreateDirectory(targetPath);
 			try
 			{
 				using (WebClient client = new WebClient())
 				{
-					int progress = 0;
 					bool finished = false;
+					int progressBarPosition = 0;
+					object locko = new object();
 					client.DownloadProgressChanged += (s, e) =>
 					{
-						if (progress != e.ProgressPercentage && e.ProgressPercentage % 10 == 0)
+						lock (locko)
 						{
-							Console.WriteLine("Progress: {0}%", e.ProgressPercentage);
-							progress = e.ProgressPercentage;
+							int len = (int)((Console.WindowWidth - 2) * 0.01 * e.ProgressPercentage);
+							Console.SetCursorPosition(0, progressBarPosition);
+							Console.Write("[");
+							Console.Write((new string('=', Math.Max(0, len - 1)) + ">").PadRight(Console.WindowWidth - 2));
+							Console.Write("]");
 						}
 					};
 					client.DownloadFileCompleted += (s, e) =>
@@ -69,30 +73,38 @@ namespace pkg
 					};
 					Console.WriteLine("Download {0}...", this.Name);
 
+					progressBarPosition = Console.CursorTop;
 					client.DownloadFileAsync(uri, tempFile);
 
 					while (!finished) Thread.Sleep(50);
 
 					Console.WriteLine("Install {0}...", this.Name);
 
-					if (Extract("x \"" + tempFile + "\" -o\"" + targetPath + "\"") != 0)
+					if (fileName.EndsWith(".exe"))
 					{
-						throw new InvalidOperationException("Failed to extract the package.");
+						Run(tempFile, "");
 					}
-
-					// Double extract .tar.gz
-					if (fileName.EndsWith(".tar.gz"))
+					else
 					{
-						string tarFile = targetPath + Path.GetFileNameWithoutExtension(tempFile);
-
-						int exitCode = Extract("x \"" + tarFile + "\" -o\"" + targetPath + "\"");
-
-						// Remove .tar file, we don't need it.
-						File.Delete(tarFile);
-
-						if (exitCode != 0)
+						if (Extract("x \"" + tempFile + "\" -o\"" + targetPath + "\"") != 0)
 						{
 							throw new InvalidOperationException("Failed to extract the package.");
+						}
+
+						// Double extract .tar.gz
+						if (fileName.EndsWith(".tar.gz"))
+						{
+							string tarFile = targetPath + Path.GetFileNameWithoutExtension(tempFile);
+
+							int exitCode = Extract("x \"" + tarFile + "\" -o\"" + targetPath + "\"");
+
+							// Remove .tar file, we don't need it.
+							File.Delete(tarFile);
+
+							if (exitCode != 0)
+							{
+								throw new InvalidOperationException("Failed to extract the package.");
+							}
 						}
 					}
 					Console.WriteLine("Finished {0}.", this.Name);
@@ -118,10 +130,20 @@ namespace pkg
 		/// <returns></returns>
 		private static int Extract(string args)
 		{
+			return Run(Config.Default.Extractor, args);
+		}
+
+		/// <summary>
+		/// Extracts an archive with 7zip
+		/// </summary>
+		/// <param name="args">Command line arguments</param>
+		/// <returns></returns>
+		private static int Run(string file, string args)
+		{
 			Process process = new Process();
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.FileName = Config.Default.Extractor;
+			process.StartInfo.FileName = file;
 			process.StartInfo.Arguments = args;
 			process.Start();
 

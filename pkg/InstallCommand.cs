@@ -32,7 +32,7 @@ namespace pkg
 
 					if (Directory.Exists(targetPath))
 					{
-						Console.WriteLine("{0} is already installed.", this.Name);
+						Console.WriteLine("{0} is already installed.", package.Name);
 						return;
 					}
 

@@ -58,5 +58,29 @@ namespace pkg {
                 this["Verbose"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\pkg\\pkg\\bin\\Debug\\")]
+        public string InstallRoot {
+            get {
+                return ((string)(this["InstallRoot"]));
+            }
+            set {
+                this["InstallRoot"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Libraries\\.temp\\")]
+        public string TempPath {
+            get {
+                return ((string)(this["TempPath"]));
+            }
+            set {
+                this["TempPath"] = value;
+            }
+        }
     }
 }
